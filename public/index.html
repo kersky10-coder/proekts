@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FileShare Hub — Хостинг проектов</title>
+    <meta name="description" content="Загружайте, храните и скачивайте свои проекты. Бесплатный хостинг файлов.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Background animated particles -->
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-inner">
+            <a href="/" class="logo">
+                <div class="logo-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                    </svg>
+                </div>
+                <span class="logo-text">FileShare<span class="logo-accent">Hub</span></span>
+            </a>
+            <nav class="nav">
+                <button class="nav-btn active" data-view="projects" id="navProjects">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                    </svg>
+                    Проекты
+                </button>
+                <button class="nav-btn" data-view="upload" id="navUpload">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    Загрузить
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <!-- Projects View -->
+        <section class="view active" id="projectsView">
+            <!-- Hero -->
+            <div class="hero">
+                <h1 class="hero-title">
+                    Храни и скачивай <br>
+                    <span class="gradient-text">свои проекты</span>
+                </h1>
+                <p class="hero-subtitle">Загружай файлы, делись ссылками, скачивай в один клик</p>
+                <!-- Stats -->
+                <div class="stats" id="stats">
+                    <div class="stat-card">
+                        <span class="stat-number" id="statProjects">0</span>
+                        <span class="stat-label">Проектов</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="statDownloads">0</span>
+                        <span class="stat-label">Скачиваний</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number" id="statSize">0 B</span>
+                        <span class="stat-label">Общий размер</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Search & Filter Bar -->
+            <div class="toolbar">
+                <div class="search-box">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="11" cy="11" r="8" />
+                        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                    </svg>
+                    <input type="text" class="search-input" id="searchInput" placeholder="Поиск проектов...">
+                </div>
+                <select class="category-filter" id="categoryFilter">
+                    <option value="all">Все категории</option>
+                    <option value="Веб">🌐 Веб</option>
+                    <option value="Игры">🎮 Игры</option>
+                    <option value="Утилиты">🔧 Утилиты</option>
+                    <option value="Мобильное">📱 Мобильное</option>
+                    <option value="Дизайн">🎨 Дизайн</option>
+                    <option value="Другое">📦 Другое</option>
+                </select>
+            </div>
+
+            <!-- Projects Grid -->
+            <div class="projects-grid" id="projectsGrid">
+                <!-- Projects loaded via JS -->
+            </div>
+
+            <!-- Empty State -->
+            <div class="empty-state hidden" id="emptyState">
+                <div class="empty-icon">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" />
+                    </svg>
+                </div>
+                <h3>Пока ничего нет</h3>
+                <p>Загрузи свой первый проект!</p>
+                <button class="btn btn-primary" onclick="showView('upload')">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    Загрузить проект
+                </button>
+            </div>
+        </section>
+
+        <!-- Upload View -->
+        <section class="view" id="uploadView">
+            <div class="upload-container">
+                <h2 class="upload-title">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
+                    Загрузить проект
+                </h2>
+
+                <form id="uploadForm" class="upload-form">
+                    <!-- Drag & Drop Zone -->
+                    <div class="drop-zone" id="dropZone">
+                        <div class="drop-zone-content">
+                            <div class="drop-zone-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                    <polyline points="17 8 12 3 7 8" />
+                                    <line x1="12" y1="3" x2="12" y2="15" />
+                                </svg>
+                            </div>
+                            <p class="drop-zone-text">Перетащи файл сюда или <span class="drop-zone-link">нажми для
+                                    выбора</span></p>
+                            <p class="drop-zone-hint">Максимальный размер: 500 МБ</p>
+                        </div>
+                        <input type="file" id="fileInput" name="file" hidden>
+                    </div>
+
+                    <!-- File preview -->
+                    <div class="file-preview hidden" id="filePreview">
+                        <div class="file-preview-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                <polyline points="14 2 14 8 20 8" />
+                            </svg>
+                        </div>
+                        <div class="file-preview-info">
+                            <span class="file-preview-name" id="filePreviewName"></span>
+                            <span class="file-preview-size" id="filePreviewSize"></span>
+                        </div>
+                        <button type="button" class="file-preview-remove" id="fileRemoveBtn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18" />
+                                <line x1="6" y1="6" x2="18" y2="18" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Form fields -->
+                    <div class="form-group">
+                        <label class="form-label" for="projectName">Название проекта *</label>
+                        <input type="text" class="form-input" id="projectName" name="name"
+                            placeholder="Мой крутой проект" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="projectDesc">Описание</label>
+                        <textarea class="form-input form-textarea" id="projectDesc" name="description"
+                            placeholder="Расскажи о проекте..." rows="3"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label" for="projectCategory">Категория</label>
+                            <select class="form-input" id="projectCategory" name="category">
+                                <option value="Веб">🌐 Веб</option>
+                                <option value="Игры">🎮 Игры</option>
+                                <option value="Утилиты">🔧 Утилиты</option>
+                                <option value="Мобильное">📱 Мобильное</option>
+                                <option value="Дизайн">🎨 Дизайн</option>
+                                <option value="Другое">📦 Другое</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label" for="projectTags">Теги</label>
+                            <input type="text" class="form-input" id="projectTags" name="tags"
+                                placeholder="javascript, react, api">
+                        </div>
+                    </div>
+
+                    <!-- Upload progress -->
+                    <div class="progress-container hidden" id="progressContainer">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <span class="progress-text" id="progressText">0%</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-upload" id="uploadBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" y1="3" x2="12" y2="15" />
+                        </svg>
+                        Загрузить
+                    </button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Delete confirmation modal -->
+    <div class="modal-overlay hidden" id="deleteModal">
+        <div class="modal">
+            <div class="modal-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6" />
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                </svg>
+            </div>
+            <h3 class="modal-title">Удалить проект?</h3>
+            <p class="modal-text">Это действие нельзя отменить. Файл будет удалён навсегда.</p>
+            <div class="modal-actions">
+                <button class="btn btn-ghost" id="cancelDeleteBtn">Отмена</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">Удалить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
