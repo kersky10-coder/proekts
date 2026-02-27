@@ -5,11 +5,24 @@ const fs = require('fs');
 const https = require('https');
 const { v4: uuidv4 } = require('uuid');
 
+// Load .env file
+const envPath = path.join(__dirname, '.env');
+if (fs.existsSync(envPath)) {
+    const envContent = fs.readFileSync(envPath, 'utf-8');
+    envContent.split('\n').forEach(line => {
+        const [key, ...vals] = line.split('=');
+        if (key && vals.length) process.env[key.trim()] = vals.join('=').trim();
+    });
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Gemini API Key
-const GEMINI_API_KEY = 'AIzaSyDCmAQBsDSJxQZOUdYOCQxt5_pBC0ms2z8';
+// Gemini API Key (from .env file)
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+if (!GEMINI_API_KEY) {
+    console.warn('⚠️  GEMINI_API_KEY не найден! Создай .env файл с GEMINI_API_KEY=ваш_ключ');
+}
 
 // Ensure directories exist
 const UPLOADS_DIR = path.join(__dirname, 'uploads');
