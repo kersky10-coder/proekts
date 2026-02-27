@@ -49,7 +49,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({
     storage,
-    limits: { fileSize: 500 * 1024 * 1024 }
+    limits: { fileSize: 10 * 1024 * 1024 * 1024 }
 });
 
 // Helper: read/write projects
@@ -239,7 +239,7 @@ app.post('/api/chat', async (req, res) => {
             parts: [{ text: message }]
         });
 
-        const result = await geminiRequest('gemini-2.0-flash', {
+        const result = await geminiRequest('gemini-2.5-flash', {
             contents,
             generationConfig: {
                 temperature: 0.8,
@@ -267,7 +267,7 @@ app.post('/api/generate-image', async (req, res) => {
             return res.status(400).json({ error: 'Промпт не может быть пустым' });
         }
 
-        const result = await geminiRequest('gemini-2.0-flash-exp-image-generation', {
+        const result = await geminiRequest('gemini-2.5-flash-image', {
             contents: [{
                 parts: [{ text: prompt }]
             }],
